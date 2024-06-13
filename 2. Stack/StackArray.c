@@ -43,30 +43,30 @@ int stack_peek(StackArrayList S) {
 	return S.data[S.top];
 }
 
-
 void display(StackArrayList S) { // displaying from index 0 to top
 	StackArrayList tempStack;
 	initStack(&tempStack);
-	int x, y;
-	for(x = 0; x <= S.top; x++) {
+	int x, y, ctr = S.top + 1;
+	printf(" Display Stack: ");
+	for(x = 0; x < ctr; x++) {
 		stack_push(&tempStack, S.data[S.top]);
 		stack_pop(&S);
 	}
-	
-	for(y = 0; y <= tempStack.top; y++) {
+	for(y = 0; y < ctr; y++) {
 		stack_push(&S, tempStack.data[tempStack.top]);
 		printf("%d ", stack_peek(tempStack));
 		stack_pop(&tempStack);
 	}
+	printf("\n");
 }
 
 void visualize(StackArrayList S) {
 	int x;
-	printf("INDEX | DATA\n");
+	printf("\n INDEX | DATA\n");
 	for(x = 0; x <= S.top; x++) {
-		printf("  %d   |  %d\n", x, S.data[x]);
+		printf("   %d   |  %d\n", x, S.data[x]);
 	}
-	printf("\nTOP: %d\n\n", stack_peek(S));
+	printf("\n Current TOP: %d\n\n", stack_peek(S));
 }
 
 StackArrayList getAllEven(StackArrayList *S) {
