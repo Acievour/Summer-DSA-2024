@@ -70,5 +70,23 @@ void visualize(StackArrayList S) {
 }
 
 StackArrayList getAllEven(StackArrayList *S) {
+	StackArrayList evenStack, tempStack;
+	initStack(&evenStack);
+	initStack(&tempStack);
+	int x, y, z, ctr = S->top + 1;
+	for(x = 0; x < ctr; x++) {
+		stack_push(&tempStack, S->data[S->top]);
+		stack_pop(&(*S));
+	}
 	
+	int tempctr = tempStack.top + 1;
+	for(y = 0; y < tempctr; y++) {
+		if(tempStack.data[tempStack.top] % 2 == 0) { // check if data is even
+			stack_push(&evenStack, tempStack.data[tempStack.top]);
+		}
+		stack_push(&(*S), tempStack.data[tempStack.top]);
+		stack_pop(&tempStack);
+	}
+	
+	return evenStack;
 }
