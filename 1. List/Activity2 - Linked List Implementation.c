@@ -62,23 +62,54 @@ void insertSorted(NodePtr *A, info elem) { // sort by age
 }
 
 void deleteElem(NodePtr *A, char name[]) { // delete using name
-	if(*A != NULL) {
+	NodePtr temp = malloc(sizeof(struct node));
+	if(temp != NULL) {
 		NodePtr *trav;
 		for(trav = A; *trav != NULL && strcmp((*trav)->data.name, name) != 0; trav = &(*trav)->next) {}
-		
+		if(*trav != NULL) {
+			temp = *trav;
+			*trav = temp->next;
+			free(temp);
+		}
 	}
 }
 
-void deleteFront() {
-	
+void deleteFront(NodePtr *A) {
+	NodePtr temp = malloc(sizeof(struct node));
+	if(temp != NULL) {
+		if(*A != NULL) { // checks if list is empty
+			temp = *A;
+			*A = temp->next;
+			free(temp);
+		}
+	}
 }
 
-void deleteRear() {
-	
+void deleteRear(NodePtr *A) {
+	NodePtr temp = malloc(sizeof(struct node));
+	if(temp != NULL) {
+		NodePtr *trav;
+		for(trav = A; *trav != NULL; trav = &(*trav)->next) {}
+		if(*A != NULL) {
+			temp = *trav;
+			*trav = temp->next;
+			free(temp);
+		}
+	}
 }
 
-void deleteAtPos() {
-	
+void deleteAtPos(NodePtr *A, int pos) {
+	NodePtr temp = malloc(sizeof(struct node));
+	if(temp != NULL) {
+		NodePtr *trav;
+		int ctr = 0;
+		for(trav = A; *trav != NULL && ctr < pos; trav = &(*trav)->next, ctr++) {}
+		if(*trav != NULL) {
+			temp = *trav;
+			*trav = temp->next;
+			free(temp);
+		}
+	}
 }
 
 void displayList(NodePtr A) {
@@ -153,6 +184,62 @@ int main() {
 	
 	printf("\nAdding new student to the rear...\n");
 	insertRear(&newLL, inputInfo);
+	
+	printf("\nDisplaying updated student list...\n");
+	displayList(newLL);
+	system("pause");
+	
+	/* =================== insertAtPos function =================== */
+	printf("\nAdd new student to a position.\n");
+	printf("Name: ");
+	scanf("%s", &inputName);
+	printf("ID: ");
+	scanf("%d", &inputIDnum);
+	printf("Age: ");
+	scanf("%d", &inputAge);
+	
+	int inputPos;
+	printf("Position: ");
+	scanf("%d", &inputPos);
+	
+	strcpy(inputInfo.name, inputName);
+	inputInfo.idNum = inputIDnum;
+	inputInfo.age = inputAge;
+	
+	printf("\nAdding new student to the position [ %d ]...\n", inputPos);
+	insertAtPos(&newLL, inputInfo, inputPos);
+	
+	printf("\nDisplaying updated student list...\n");
+	displayList(newLL);
+	system("pause");
+	
+	/* =================== deleteElem function =================== */
+	printf("\nRemove student using name.\n");
+	printf("Name: ");
+	scanf("%s", &inputName);
+	
+	printf("\nRemove student %s...\n", inputName);
+	deleteElem(&newLL, inputName);
+	
+	printf("\nDisplaying updated student list...\n");
+	displayList(newLL);
+	system("pause");
+	
+	/* =================== deleteFront function =================== */
+	printf("\nRemove student at the front.\n");
+	
+	printf("\nRemove student...\n");
+	deleteFront(&newLL);
+	
+	printf("\nDisplaying updated student list...\n");
+	displayList(newLL);
+	system("pause");
+	
+	/* =================== deleteRear function =================== */
+	printf("\nRemove student at the rear.\n");
+	
+	printf("\nRemove student...\n");
+	deleteRear(&newLL);
 	
 	printf("\nDisplaying updated student list...\n");
 	displayList(newLL);
