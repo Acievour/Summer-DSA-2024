@@ -1,5 +1,5 @@
 # Summer DSA Repository
-Student Name: Nathan Eldridge Mitnick C. Pernites
+Student Name: Nathan Eldridge Mitnick C. Pernites  
 ID Number: 11500356
 
 ## Activity 1
