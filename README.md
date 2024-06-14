@@ -1,5 +1,15 @@
-# 1. List
-This folder has the activity 1 and 2 that are the array and linked list implementation of List.
+# Summer DSA Repository
+Student Name: Nathan Eldridge Mitnick C. Pernites
+ID Number: 11500356
 
-# 2. Stack
-This folder has activity 3 which has the basics of Stack.
+# Activity 1
+This folder focuses on array implementation of ADT List.
+
+# Activity 2
+This folder focuses on linked list implementation of ADT List.
+
+# Activity 3
+This folder contains the array implementation of Stacks.
+
+# Activity 4
+This folder contains the linked list implementation of Queues.
