@@ -89,7 +89,7 @@ void deleteRear(NodePtr *A) {
 	NodePtr temp = malloc(sizeof(struct node));
 	if(temp != NULL) {
 		NodePtr *trav;
-		for(trav = A; *trav != NULL; trav = &(*trav)->next) {}
+		for(trav = A; (*trav)->next != NULL; trav = &(*trav)->next) {}
 		if(*A != NULL) {
 			temp = *trav;
 			*trav = temp->next;
