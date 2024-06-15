@@ -8,23 +8,23 @@ typedef struct node {
 	struct node *next;
 } StackLinkedList, *StackPtr;
 
-void initStack(StackPtr *S);
-StackLinkedList createStack();
+void initStackLL(StackPtr *S);
+StackPtr createStackLL();
 
-bool stack_push(StackPtr *S, int elem);
-bool stack_pop(StackPtr *S);
-int stack_peek(StackPtr S);
+bool stack_pushLL(StackPtr *S, int elem);
+bool stack_popLL(StackPtr *S);
+int stack_peekLL(StackPtr S);
 
-bool isEmpty(StackPtr S);
+bool isEmptyLL(StackPtr S);
 
-void display(StackPtr S);
-void visualize(StackPtr S);
+void displayLL(StackPtr *S);
+void visualizeLL(StackPtr S);
 
 // ======================= other functions ======================= //
 //      create a function that would get all the even numbers 	   //
 //      and return as a new stack removing from the old stack	   //
 // =============================================================== //
 
-StackPtr getAllEven(StackPtr *S);
+StackPtr getAllEvenLL(StackPtr *S);
 
 #endif
