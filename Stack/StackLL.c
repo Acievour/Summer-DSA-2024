@@ -79,5 +79,21 @@ void visualizeLL(StackPtr S) {
 }
 
 StackPtr getAllEvenLL(StackPtr *S) {
+	StackPtr evenStack, tempStack;
+	initStackLL(&evenStack);
+	initStackLL(&tempStack);
+	while((*S) != NULL) {
+		stack_pushLL(&tempStack, (*S)->data);
+		stack_popLL(&(*S));
+	}
 	
+	while(tempStack != NULL) {
+		if(tempStack->data % 2 == 0) {
+			stack_pushLL(&evenStack, tempStack->data);
+		}
+		stack_pushLL(&(*S), tempStack->data);
+		stack_popLL(&tempStack);
+	}
+	
+	return evenStack;
 }

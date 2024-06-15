@@ -9,9 +9,11 @@ int main(int argc, char *argv[]) {
 	StackArrayList newStack;
 	StackArrayList evenStack;
 	StackPtr stackLL;
+	StackPtr evenStackLL;
 	initStack(&newStack);
 	initStack(&evenStack);
 	initStackLL(&stackLL);
+	initStackLL(&evenStackLL);
 	
 	printf("|----------- Created new Stack Array -----------|\n");
 	visualize(newStack);
@@ -41,6 +43,7 @@ int main(int argc, char *argv[]) {
 	
 	display(evenStack);
 	visualize(evenStack);
+	
 	printf("====================================================================================\n\n");
 	
 	printf("|----------- Created new Stack LL -----------|\n");
@@ -61,6 +64,15 @@ int main(int argc, char *argv[]) {
 	stack_popLL(&stackLL);
 	displayLL(&stackLL);
 	visualizeLL(stackLL);
+	
+	evenStackLL = getAllEvenLL(&stackLL);
+	
+	printf("|--------- Get all even function ---------|\n\n");
+	displayLL(&stackLL);
+	visualizeLL(stackLL);
+	
+	displayLL(&evenStackLL);
+	visualizeLL(evenStackLL);
 	
 	return 0;
 }
