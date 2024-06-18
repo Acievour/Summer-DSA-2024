@@ -3,9 +3,17 @@
 #include <stdbool.h>
 #include "QueueCircularArr.h"
 
+#define EMPTY -1
+
 void initQueueArr(CircularQ *Q) {
 	Q->front = 0;
 	Q->rear = -1;
+	
+	// below is not really needed but for visualization data are initialized to -1
+	int x, ctr = MAX - 1;
+	for(x = 0; x <= MAX; x++) {
+		Q->data[x] = EMPTY;
+	}
 }
 
 bool isFullArr(CircularQ Q) {
@@ -38,9 +46,9 @@ int rearQArr(CircularQ Q) {
 }
 
 void displayArr(CircularQ Q) {
-	int x;
+	int x, ctr = MAX - 1;
 	printf(" INDEX | DATA\n");
-	for(x = Q.front; x <= Q.rear; x++) {
+	for(x = 0; x <= ctr; x++) {
 		printf("   %d   |  %d\n", x, Q.data[x]);
 	}
 	printf("\n Front: %d\n Rear: %d\n", frontQArr(Q), rearQArr(Q));
