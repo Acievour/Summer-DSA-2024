@@ -47,12 +47,12 @@ int rearQ(Queue Q) {
 
 
 void display(Queue Q) {
-	printf("INDEX | DATA\n");
+	printf(" INDEX | DATA\n");
 	NodePtr trav;
 	int x;
 	for(trav = Q.front, x = 0; trav != NULL; trav = trav->next, x++) {
-		printf("  %d   |  %d\n", x, trav->data);
+		printf("   %d   |  %d\n", x, trav->data);
 	}
-	printf("\nFront: %d\nRear: %d\n", frontQ(Q), rearQ(Q));
+	printf("\n Front: %d\n Rear: %d\n", frontQ(Q), rearQ(Q));
 	printf("\n\n");
 }

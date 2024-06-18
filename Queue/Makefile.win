@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o QueueLL.o
-LINKOBJ  = main.o QueueLL.o
+OBJ      = main.o QueueLL.o QueueCircularArr.o
+LINKOBJ  = main.o QueueLL.o QueueCircularArr.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -29,3 +29,6 @@ main.o: main.c
 
 QueueLL.o: QueueLL.c
 	$(CC) -c QueueLL.c -o QueueLL.o $(CFLAGS)
+
+QueueCircularArr.o: QueueCircularArr.c
+	$(CC) -c QueueCircularArr.c -o QueueCircularArr.o $(CFLAGS)
