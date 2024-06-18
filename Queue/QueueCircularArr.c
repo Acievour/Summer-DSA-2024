@@ -8,12 +8,6 @@
 void initQueueArr(CircularQ *Q) {
 	Q->front = 0;
 	Q->rear = -1;
-	
-	// below is not really needed but for visualization data are initialized to -1
-	int x, ctr = MAX - 1;
-	for(x = 0; x <= MAX; x++) {
-		Q->data[x] = EMPTY;
-	}
 }
 
 bool isFullArr(CircularQ Q) {
@@ -26,7 +20,7 @@ bool isEmptyArr(CircularQ Q) {
 
 void enqueueArr(CircularQ *Q, int elem) {
 	if(!(isFullArr(*Q))) {
-		Q->rear++;
+		Q->rear = (Q->rear + 1) % MAX;
 		Q->data[Q->rear] = elem;
 	}
 }
@@ -46,10 +40,13 @@ int rearQArr(CircularQ Q) {
 }
 
 void displayArr(CircularQ Q) {
-	int x, ctr = MAX - 1;
+	int x;
 	printf(" INDEX | DATA\n");
-	for(x = 0; x <= ctr; x++) {
-		printf("   %d   |  %d\n", x, Q.data[x]);
+	if(!isEmptyArr(Q)) {
+		for(x = Q.front; x != Q.rear; x = (x + 1) % MAX) {
+			printf("   %d   |  %d \n", x, Q.data[x]);
+		}
+		printf("   %d   |  %d \n", x, Q.data[x]);
 	}
 	printf("\n Front: %d\n Rear: %d\n", frontQArr(Q), rearQArr(Q));
 	printf("\n\n");

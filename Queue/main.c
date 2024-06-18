@@ -27,6 +27,8 @@ int main(int argc, char *argv[]) {
 	
 	printf(" ======================= Circular Array =======================\n\n");
 	
+	displayArr(circularQ);
+	
 	enqueueArr(&circularQ, 80);
 	enqueueArr(&circularQ, 20);
 	enqueueArr(&circularQ, 35);
