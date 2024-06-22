@@ -22,6 +22,6 @@ int frontQArr(CircularQ Q);
 int rearQArr(CircularQ Q);
 
 void displayArr(CircularQ Q);
-
+void visualizeArr(CircularQ Q);
 
 #endif

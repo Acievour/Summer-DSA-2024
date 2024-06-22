@@ -45,8 +45,16 @@ int rearQ(Queue Q) {
 	return Q.rear->data;
 }
 
-
 void display(Queue Q) {
+	NodePtr trav;
+	printf(" Values of the Linked List: ");
+	for(trav = Q.front; trav != NULL; trav = trav->next) {
+		printf("%d ", trav->data);
+	}
+	printf("\n\n");
+}
+
+void visualize(Queue Q) {
 	printf(" INDEX | DATA\n");
 	NodePtr trav;
 	int x;
@@ -54,5 +62,5 @@ void display(Queue Q) {
 		printf("   %d   |  %d\n", x, trav->data);
 	}
 	printf("\n Front: %d\n Rear: %d\n", frontQ(Q), rearQ(Q));
-	printf("\n\n");
+	printf("\n");
 }

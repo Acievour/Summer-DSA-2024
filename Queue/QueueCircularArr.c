@@ -41,13 +41,24 @@ int rearQArr(CircularQ Q) {
 
 void displayArr(CircularQ Q) {
 	int x;
+	if(!isEmptyArr(Q)) {
+		printf(" Values of the Circular Array: ");
+		for(x = Q.front; x != Q.rear; x = (x + 1) % MAX) {
+			printf("%d ", Q.data[x]);
+		}
+		printf("%d \n", Q.data[x]);
+	}
+	printf("\n\n");
+}
+
+void visualizeArr(CircularQ Q) {
+	int x;
 	printf(" INDEX | DATA\n");
 	if(!isEmptyArr(Q)) {
-		for(x = Q.front; x != Q.rear; x = (x + 1) % MAX) {
+		for(x = 0; x < MAX; x++) {
 			printf("   %d   |  %d \n", x, Q.data[x]);
 		}
-		printf("   %d   |  %d \n", x, Q.data[x]);
 	}
 	printf("\n Front: %d\n Rear: %d\n", frontQArr(Q), rearQArr(Q));
-	printf("\n\n");
+	printf("\n");
 }

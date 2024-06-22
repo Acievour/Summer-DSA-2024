@@ -19,5 +19,6 @@ int frontQ(Queue Q);
 int rearQ(Queue Q);
 
 void display(Queue Q);
+void visualize(Queue Q);
 
 #endif
