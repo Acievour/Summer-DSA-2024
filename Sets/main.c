@@ -41,7 +41,6 @@ int main(int argc, char *argv[]) {
 	displaySetArr(B);
 	
 	system("pause");
-	system("cls");
 	printf("\n     Deleted values 8 and 3 from Set A...\n");
 	delElemArr(&A, 8);
 	delElemArr(&A, 3);

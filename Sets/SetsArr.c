@@ -5,10 +5,10 @@
 void initSetArr(Set *S) {
 	S->count = 0;
 	
-	// below is the statement for initializing all the elements to 0
+	// below is the statement for initializing all the elements to -1
 	int x;
 	for(x = 0; x < MAX; x++) {
-		S->data[x] = 0;
+		S->data[x] = -1;
 	}
 }
 
@@ -19,26 +19,30 @@ Set createSetArr() {
 }
 
 void addElemArr(Set *S, int elem) {
-	if(elem > 0 && elem < MAX) { // checks the elem if it is in the range of the universal set
-		if(S->count < MAX) { // checks if the set has space
-			if(S->data[elem] != 1) { 
-				S->data[elem] = 1;    // this if statement checks if value already exists and doesn't
-				S->count++;           // update the count if it already exists
+	if(elem > 0 && elem < MAX) {
+		if(S->count < MAX) {
+			int x;
+			for(x = 0; x < S->count && S->data[x] != elem; x++) {}
+			if(S->data[x] != elem) {
+				S->data[x] = elem;
+				S->count++;
 			} else {
-				S->data[elem] = 1;
+				S->data[x] = elem;
 			}
 		}
 	}
 }
 
 void delElemArr(Set *S, int elem) {
-	if(elem > 0 && elem < MAX) { // checks the elem if it is in the range of the universal set
-		if(S->count < MAX) { // checks if the set has space
-			if(S->data[elem] != 0) { 
-				S->data[elem] = 0;    // this if statement checks if value already exists and doesn't
-				S->count--;           // update the count if it already exists
-			} else {
-				S->data[elem] = 0;
+	if(elem > 0 && elem < MAX) {
+		if(S->count < MAX) {
+			int x, y;
+			for(x = 0; x < S->count && S->data[x] != elem; x++){}
+			if(S->data[x] == elem) {
+				for(y = x; y <= S->count; y++) {
+					S->data[y] = S->data[y+1];
+				}
+				S->count--;
 			}
 		}
 	}
@@ -46,28 +50,48 @@ void delElemArr(Set *S, int elem) {
 
 Set unionArr(Set A, Set B) {
 	Set C;
-	initSetArr(&C);
-	int x;
-	for(x = 0; x < MAX; x++) {
-		if(A.data[x] | B.data[x] == 1) {
-			C.data[x] = 1;
-			C.count++;
-		}
-	}
-	return C;
+    int a = 0, b = 0;
+    initSetArr(&C);
+    while(a < A.count && b < B.count) {
+        if(A.data[a] < B.data[b]) {
+            C.data[C.count] = A.data[a];
+            a++;
+        } else {
+            if(A.data[a] == B.data[b]) {
+                a++;
+            }
+            C.data[C.count] = B.data[b];
+            b++;
+        }
+        C.count++;
+    }
+
+    if(b < B.count) {
+        A = B;
+        a = b;
+    }
+
+    while(a < A.count) {
+        C.data[C.count] = A.data[a];
+        a++;
+        C.count++;
+    }
+
+    return C;
 }
 
 Set intersectionArr(Set A, Set B) {
-	Set C;
-	initSetArr(&C);
-	int x;
-	for(x = 0; x < MAX; x++) {
-		if(A.data[x] && B.data[x] == 1) {
-			C.data[x] = 1;
-			C.count++;
-		}
-	}
-	return C;
+    Set C;
+    int a, b;
+    initSetArr(&C);
+    for(a = 0; a < A.count; a++) {
+        for(b = 0; b < B.count && A.data[a] < B.data[b]; b++) {}
+        if(b < B.count && A.data[a] == B.data[b]) {
+            C.data[C.count] = A.data[a];
+            C.count++;
+        }
+    }
+    return C;
 }
 
 Set differenceArr(Set A, Set B) {
@@ -78,7 +102,7 @@ void visualizeSetArr(Set S) {
 	int x;
 	printf("\n           INDEX | DATA\n");
 	for(x = 0; x < MAX; x++) {
-		printf("             %d   |   %d\n", x, S.data[x]);
+		printf("             %d   |  %d\n", x, S.data[x]);
 	}
 	printf("\n           SET COUNT: %d\n\n", S.count);
 }
@@ -86,10 +110,8 @@ void visualizeSetArr(Set S) {
 void displaySetArr(Set S) {
 	int x;
 	printf("           The Values of the Set: { ");
-	for(x = 0; x < MAX; x++) {
-		if(S.data[x] != 0) {
-			printf("%d ", x);
-		}
+	for(x = 0; x < S.count; x++) {
+			printf("%d ", S.data[x]);
 	}
 	printf("}");
 	printf("\n\n");
