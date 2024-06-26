@@ -15,20 +15,16 @@ typedef struct {
 	int max;
 } Dictionary;
 
-unsigned long hashVal(char *word);
+int hash(char *word);
 void initDict(Dictionary *D);
-Dictionary *create_Dict(int size);
+Dictionary *create_Dict();
 
-void free_list(NodePtr list);
-void free_dict(Dictionary *D);
-void resize(Dictionary *D);
-
-void insertElem(Dictionary *D, char *word);
+void insertElem(Dictionary *dict, char *word);
 void deleteElem(Dictionary *D, char *word);
 void findElem(Dictionary *D, char *word);
 
 void displayDict(Dictionary *D);
-void visualizeDict(Dictionary D);
+void visualizeDict(Dictionary *D);
 
 
 #endif

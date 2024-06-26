@@ -3,87 +3,76 @@
 #include <string.h>
 #include "OpenHashing.h"
 
-unsigned long hash(Dictionary *D, char *word) {
-	unsigned long hash = 0;
-	int x;
-	while((x = *word++)) {
-		hash = hash * 31 + x;
-	}
-	return hash % D->max;
+int hash(char *word) {
+    int hash = 0;
+    int x;
+    for(x = 0; word[x] != '\0'; x++) {
+        hash = (hash * 31 + word[x]) % MAX;
+    }
+    return hash;
 }
 
 void initDict(Dictionary *D) {
+	D->max = MAX;
+	D->count = 0;
+	D->data = (NodePtr *)malloc(MAX * sizeof(NodePtr));
 	int x;
 	for(x = 0; x < MAX; x++) {
 		D->data[x] = NULL;
 	}
-	D->count = 0;
-	D->max = MAX;
 }
 
-Dictionary *create_Dict(int size) {
+Dictionary *create_Dict() {
 	Dictionary *D = (Dictionary *)malloc(sizeof(Dictionary));
-	D->max = size;
+	D->max = MAX;
 	D->count = 0;
-//	D->data = calloc(size, sizeof(NodePtr));
+	D->data = (NodePtr *)malloc(MAX * sizeof(NodePtr));
+	int x;
+	for(x = 0; x < MAX; x++) {
+		D->data[x] = NULL;
+	}
 	return D;
 }
 
-void free_list(NodePtr list) {
-	while(list != NULL) {
-		NodePtr temp;
-		temp = list;
-		list = list->next;
-		free(temp->word);
-		free(temp);
-	}
-}
-
-void free_dict(Dictionary *D) {
-	int x;
-	for(x = 0; x < D->max; x++) {
-		if(D->data[x] != NULL) {
-			free_list(D->data[x]);
-		}
-	}
-	free(D->data);
-	free(D);
-}
-
-void resize(Dictionary *D) {
-	int old_max = D->max;
-	D->max = D->max * 2;
-	NodePtr *old_data = D->data;
-//	D->data  = calloc(D->max, sizeof(NodePtr));
-	D->count = 0;
-	
-	int x;
-	for(x = 0; x < old_max; x++) {
-		NodePtr list = old_data[x];
-		if(list != NULL) {
-			NodePtr next = list->next;
-            unsigned long hashval = hash(D, list->word);
-            list->next = D->data[hashval];
-            D->data[hashval] = list;
-            list = next;
-            D->count++;
-		}
-	}
-	
-	free(old_data);
-}
-
 void insertElem(Dictionary *D, char *word) {
-	if((float)D->count / D->max > THRESHOLD) {
-		resize(D);
-	}
-	
-	unsigned long hashval = hash(D, word);
-	Node *temp = (Node*)malloc(sizeof(Node));
-	temp->word = strdup(word);
-	temp->next = D->data[hashval];
-	D->data[hashval] = temp;
-	D->count++;
+	int index = hash(word);
+    NodePtr node = D->data[index];
+    while (node!= NULL) {
+        if (strcmp(node->word, word) == 0) {
+            return; // word already exists
+        }
+        node = node->next;
+    }
+
+    NodePtr newNode = (NodePtr)malloc(sizeof(Node));
+    newNode->word = (char *)malloc((strlen(word) + 1) * sizeof(char));
+    strcpy(newNode->word, word);
+    newNode->next = D->data[index];
+    D->data[index] = newNode;
+    D->count++;
+
+    if ((double)D->count / D->max > THRESHOLD) {
+        // resize the dictionary if the load factor exceeds the threshold
+        D->max *= 2;
+        NodePtr *newData = (NodePtr *)malloc(D->max * sizeof(NodePtr));
+		int x, y;
+        for (x = 0; x < D->max; x++) {
+            newData[x] = NULL;
+        }
+        for (y = 0; y < MAX; y++) {
+            NodePtr node = D->data[y];
+            while (node!= NULL) {
+                int newIndex = hash(node->word);
+                NodePtr newNode = (NodePtr)malloc(sizeof(Node));
+                newNode->word = node->word;
+                newNode->next = newData[newIndex];
+                newData[newIndex] = newNode;
+                node = node->next;
+            }
+        }
+        free(D->data);
+        D->data = newData;
+    }
 }
 
 void deleteElem(Dictionary *D, char *word) {
@@ -95,20 +84,32 @@ void findElem(Dictionary D, char *word) {
 }
 
 void displayDict(Dictionary *D) {
+	NodePtr trav;
 	int x;
-	printf(" INDEX | DATA\n");
+	printf("\nWords found: ");
 	for(x = 0; x < D->max; x++) {
-		printf("\n%d ", x);
-		if(D->data[x] != NULL) {
-			NodePtr trav;
-			for(trav = D->data[x]; trav != NULL; trav = trav->next) {
-				printf("%s -> ", trav->word);
-			}
+		trav = D->data[x];
+		while(trav != NULL) {
+			printf("%s ", trav->word);
+			trav = trav->next;
 		}
 	}
+	printf("\n\n");
 }
 
-void visualizeDict(Dictionary D) {
-	
+void visualizeDict(Dictionary *D) {
+	NodePtr trav;
+	int x;
+	printf(" INDEX\t|   DATA\n");
+	for(x = 0; x < D->max; x++) {
+		trav = D->data[x];
+		printf("   %d\t|   ", x);
+		while(trav != NULL) {
+			printf("%s - ", trav->word);
+			trav = trav->next;
+		}
+		printf("\n");
+	}
+	printf("Current dictionary size: %d\n\n", D->max);
 }
 
