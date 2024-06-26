@@ -19,7 +19,7 @@ int hash(char *word);
 void initDict(Dictionary *D);
 Dictionary *create_Dict();
 
-void insertElem(Dictionary *dict, char *word);
+void insertElem(Dictionary *D, char *word);
 void deleteElem(Dictionary *D, char *word);
 void findElem(Dictionary *D, char *word);
 

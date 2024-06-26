@@ -25,6 +25,8 @@ int main(int argc, char *argv[]) {
 	
 	displayDict(Dict);
 	visualizeDict(Dict);
+	findElem(Dict, "orange");
+	findElem(Dict, "papaya");
 	
 	insertElem(Dict, "pineapple");
 	insertElem(Dict, "banana");
@@ -33,6 +35,12 @@ int main(int argc, char *argv[]) {
 	insertElem(Dict, "coconut");
 	insertElem(Dict, "watermelon");
 	insertElem(Dict, "papaya");
+	
+	displayDict(Dict);
+	visualizeDict(Dict);
+	
+	deleteElem(Dict, "watermelon");
+	deleteElem(Dict, "pineapple");
 	
 	displayDict(Dict);
 	visualizeDict(Dict);
