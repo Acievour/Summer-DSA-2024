@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "OpenHashing.h"
+#include "ClosedHashing.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
@@ -44,6 +45,26 @@ int main(int argc, char *argv[]) {
 	
 	displayDict(Dict);
 	visualizeDict(Dict);
+	
+	DictionaryC closedDict;
+	initDictC(&closedDict);
+	
+	displayDictC(closedDict);
+	visualizeDictC(closedDict);
+	
+	insertElemC(&closedDict, "watermelon");
+	insertElemC(&closedDict, "oranges");
+	insertElemC(&closedDict, "papaya");
+	insertElemC(&closedDict, "apples");
+	insertElemC(&closedDict, "banana");
+	
+	displayDictC(closedDict);
+	visualizeDictC(closedDict);
+	
+	deleteElemC(&closedDict, "watermelon");
+	
+	displayDictC(closedDict);
+	visualizeDictC(closedDict);
 	
 	return 0;
 }

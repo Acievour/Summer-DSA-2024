@@ -52,12 +52,10 @@ void insertElem(Dictionary *D, char *word) {
         // If the list at this index is empty, set the new node as the head
         D->data[index] = newNode;
     } else {
-        // Otherwise, find the last node in the list and append the new node
-        NodePtr current = D->data[index];
-        while(current->next!= NULL) {
-            current = current->next;
-        }
-        current->next = newNode;
+        // Otherwise, find the last node in the list and append the new node 
+        NodePtr trav;
+        for(trav = D->data[index]; trav->next != NULL; trav = trav->next) {}
+		trav->next = newNode;
     }
     D->count++;
 
@@ -67,33 +65,31 @@ void insertElem(Dictionary *D, char *word) {
     	initDict(&newDict);
     	newDict.max = D->max * 2;
     	NodePtr *newData = (NodePtr *)malloc(newDict.max * sizeof(NodePtr));
+    	
 	    int x;
 	    for(x = 0; x < newDict.max; x++) {
-	        newData[x] = NULL;
+	        newDict.data[x] = NULL;
 	    }
-	    newDict.data = newData;
+	    
 	    int y;
 	    for(y = 0; y < D->max; y++) {
-	        NodePtr node = D->data[y];
-	        while (node!= NULL) {
-	            int index = hash(node->word);
-	            NodePtr newNode = (NodePtr)malloc(sizeof(Node));
-	            newNode->word = strdup(node->word);
-	            newNode->next = NULL;
-	            if (newDict.data[index] == NULL) {
-	                // If the list at this index is empty, set the new node as the head
-	                newDict.data[index] = newNode;
-	            } else {
-	                // Find the last node in the list and append the new node
-	                NodePtr current = newDict.data[index];
-	                while (current->next!= NULL) {
-	                    current = current->next;
-	                }
-	                current->next = newNode;
-	            }
-            	node = node->next;
-	        }
-	    }
+			NodePtr trav3;
+			for(trav3 = D->data[y]; trav3 != NULL; trav3 = trav3->next) {
+				int hashval = hash(trav3->word);
+				NodePtr newNode = (NodePtr)malloc(sizeof(Node));
+				newNode->word = strdup(trav3->word);
+				newNode->next = NULL;
+		
+				if(newDict.data[hashval] != NULL) {
+					NodePtr trav;
+					for(trav = newDict.data[hashval]; trav != NULL; trav = trav->next) {}
+					trav->next = newNode;
+				} else {
+					newDict.data[hashval] = newNode;
+				}
+			}
+		}
+		
 	    newDict.count = D->count;
 	    free(D->data);
 	    *D = newDict;
