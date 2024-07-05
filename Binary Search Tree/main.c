@@ -9,16 +9,16 @@ int main(int argc, char *argv[]) {
 	NodePtr newBST;
 	initBST(&newBST);
 	
-	Product productArr[10] = {{"Piatos", 40.00, 53, {10, 5, 2024}},
-							  {"Nova", 45.00, 78, {18, 3, 2024}},
-							  {"Tomblerone", 90.00, 44, {22, 8, 2024}},
-							  {"Lays", 75.00, 38, {24, 11, 2024}},
-							  {"Mang Juan", 35.00, 99, {4, 6, 2024}},
-							  {"Hansel", 9.00, 131, {18, 7, 2024}},
-							  {"Fita", 9.00, 122, {27, 9, 2023}},
-							  {"Ace", 9.00, 111, {1, 6, 2023}},
-							  {"Oreos", 8.00, 140, {13, 7, 2023}},
-							  {"SkyFlakes", 8.00, 138, {12, 12, 2024}},
+	Product productArr[20] = {{"Piatos", 40.00, 53, {10, 5, 2024}},     // 0
+							  {"Nova", 45.00, 78, {18, 3, 2024}},       // 1
+							  {"Tomblerone", 90.00, 44, {22, 8, 2024}}, // 2
+							  {"Lays", 75.00, 38, {24, 11, 2024}},      // 3
+							  {"MangJuan", 35.00, 99, {4, 6, 2024}},    // 4
+							  {"Hansel", 9.00, 131, {18, 7, 2024}},     // 5
+							  {"Fita", 9.00, 122, {27, 9, 2023}},       // 6
+							  {"Ace", 9.00, 111, {1, 6, 2023}},         // 7
+							  {"Oreos", 8.00, 140, {13, 7, 2023}},      // 8
+							  {"SkyFlakes", 8.00, 138, {12, 12, 2024}}, // 9
 							 };
 	
 	
@@ -31,6 +31,22 @@ int main(int argc, char *argv[]) {
 	insertElem(&newBST, productArr[7]);
 	insertElem(&newBST, productArr[8]);
 	insertElem(&newBST, productArr[9]);
+	
+	printf("Preorder: { ");
+	preorder(newBST);
+	printf("}");
+	printf("\n\n");
+	printf("Inorder: { ");
+	inorder(newBST);
+	printf("}");
+	printf("\n\n");
+	printf("Postorder: { ");
+	postorder(newBST);
+	printf("}");
+	
+	printf("\n\nMin Value: %s\n\n", min(newBST));
+	
+	deleteElem(&newBST, productArr[6]);
 	
 	printf("Preorder: { ");
 	preorder(newBST);

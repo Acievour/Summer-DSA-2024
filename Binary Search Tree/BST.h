@@ -23,11 +23,13 @@ typedef struct node {
 void initBST(NodePtr *A);
 
 void insertElem(NodePtr *A, Product elem); // non recursive
+void addElem(NodePtr *A, Product elem); // recursive
 void deleteElem(NodePtr *A, Product elem); // non recursive
+void removeElem(NodePtr *A, Product elem); // recursive
 bool isMember(NodePtr A, Product elem);
 
-int min(NodePtr A); // this function returns the minimum value of the tree
-int max(NodePtr A); // this function returns the maximum value of the tree
+char *min(NodePtr A); // this function returns the minimum value of the tree
+char *max(NodePtr A); // this function returns the maximum value of the tree
 
 void displayBST(NodePtr A); // breadth first search using queue
 void visualizeBST(NodePtr A);
