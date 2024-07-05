@@ -21,8 +21,8 @@ void visualizeBST(BST *A);
 int min(BST *A); // this function returns the minimum value of the tree
 int max(BST *A); // this function returns the maximum value of the tree
 
-void preorder(BST *A); // NLR (node, left right)
-void inorder(BST *A); // LNR (left, node, right)
-void postorder(BST *A); // LRN (left, right, node)
+void preorder(BST A); // NLR (node, left right)
+void inorder(BST A); // LNR (left, node, right)
+void postorder(BST A); // LRN (left, right, node)
 
 #endif
