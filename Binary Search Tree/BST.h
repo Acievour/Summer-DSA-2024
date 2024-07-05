@@ -3,26 +3,37 @@
 
 #include <stdbool.h>
 
+typedef struct {
+	int day, month, year;
+} Date;
+
+typedef struct {
+	char prodName[20];
+	float prodPrice;
+	int prodQty;
+	Date expDate;
+} Product;
+
 typedef struct node {
-	int data;
+	Product item;
 	struct node *left;
 	struct node *right;
-} *BST;
+} NodeType, *NodePtr;
 
-void initBST(BST *A);
+void initBST(NodePtr *A);
 
-void insertElem(BST *A, int elem);
-void deleteElem(BST *A, int elem);
-bool isMember(BST *A, int elem);
+void insertElem(NodePtr *A, Product elem); // non recursive
+void deleteElem(NodePtr *A, Product elem); // non recursive
+bool isMember(NodePtr A, Product elem);
 
-void displayBST(BST *A);
-void visualizeBST(BST *A);
+int min(NodePtr A); // this function returns the minimum value of the tree
+int max(NodePtr A); // this function returns the maximum value of the tree
 
-int min(BST *A); // this function returns the minimum value of the tree
-int max(BST *A); // this function returns the maximum value of the tree
+void displayBST(NodePtr A); // breadth first search using queue
+void visualizeBST(NodePtr A);
 
-void preorder(BST A); // NLR (node, left right)
-void inorder(BST A); // LNR (left, node, right)
-void postorder(BST A); // LRN (left, right, node)
+void preorder(NodePtr A); // NLR (node, left right)
+void inorder(NodePtr A); // LNR (left, node, right)
+void postorder(NodePtr A); // LRN (left, right, node)
 
 #endif

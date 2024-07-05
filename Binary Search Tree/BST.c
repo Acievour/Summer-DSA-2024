@@ -1,22 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "BST.h"
 
-void initBST(BST *A) {
+void initBST(NodePtr *A) {
 	*A = NULL;
 }
 
-void insertElem(BST *A, int elem) {
-	BST *trav;
+void insertElem(NodePtr *A, Product elem) { // non recursive
+	NodePtr *trav;
 	
 	for(trav = A; *trav != NULL;) {
-		trav = (elem < (*trav)->data) ? &(*trav)->left : &(*trav)->right;
+		if(strcmp(elem.prodName, (*trav)->item.prodName) < 0) {
+			trav = &(*trav)->left;
+		} else {
+			trav = &(*trav)->right;
+		}
 	}
 	
-	if(*trav != NULL) {
-		BST temp = (BST)malloc(sizeof(struct node));
+	if(*trav == NULL) {
+		NodePtr temp = (NodePtr)malloc(sizeof(NodeType));
 		if(temp != NULL) {
-			temp->data = elem;
+			temp->item = elem;
 			temp->left = NULL;
 			temp->right = NULL;
 			*trav = temp;
@@ -24,54 +29,50 @@ void insertElem(BST *A, int elem) {
 	}
 }
 
-void deleteElem(BST *A, int elem) {
+void deleteElem(NodePtr *A, Product elem) { // non recursive
 	
 }
 
-bool isMember(BST *A, int elem) {
+bool isMember(NodePtr A, Product elem) {
 	
 }
 
-void displayBST(BST *A) {
+int min(NodePtr A) { // this function returns the minimum value of the tree
+
+}
+
+int max(NodePtr A) { // this function returns the maximum value of the tree
+
+}
+
+void displayBST(NodePtr A) {
 	
 }
 
-void visualizeBST(BST *A) {
+void visualizeBST(NodePtr A) {
 	
 }
 
-int min(BST *A) { // this function returns the minimum value of the tree
-
-}
-
-int max(BST *A) { // this function returns the maximum value of the tree
-
-}
-
-void preorder(BST A) { // NLR (node, left right)
-	printf("Preorder of the BST: { ");
+void preorder(NodePtr A) { // NLR (node, left right)
 	if(A != NULL) {
-		printf("%d ", A->data);
+		printf("%s ", A->item.prodName);
 		preorder(A->left);
 		preorder(A->right);
 	}
-	printf("}");
 }
 
-void inorder(BST A) { // LNR (left, node, right)
-	printf("Inorder of the BST: { ");
+void inorder(NodePtr A) { // LNR (left, node, right)
 	if(A != NULL) {
 		inorder(A->left);
-		printf("%d ", A->data);
+		printf("%s ", A->item.prodName);
 		inorder(A->right);
 	}
-	printf("}");
 }
 
-void postorder(BST A) { // LRN (left, right, node)
+void postorder(NodePtr A) { // LRN (left, right, node)
 	if(A != NULL) {
 		postorder(A->left);
 		postorder(A->right);
-		printf("%d ", A->data);
+		printf("%s ", A->item.prodName);
 	}
 }
