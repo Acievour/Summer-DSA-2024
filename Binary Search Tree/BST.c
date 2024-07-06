@@ -7,6 +7,52 @@ void initBST(NodePtr *A) {
 	*A = NULL;
 }
 
+QNode* createQNode(NodePtr data) {
+	QNode *newNode = (QNode*)malloc(sizeof(QNode));
+    if(newNode != NULL) {
+        newNode->data = data;
+    	newNode->next = NULL;
+    	return newNode;
+    }
+}
+
+Queue* createQueue() {
+	Queue *queue = (Queue*)malloc(sizeof(Queue));
+    if(queue != NULL) {
+        queue->front = NULL;
+    	queue->rear = NULL;
+    	return queue;
+	}
+}
+
+int isEmpty(Queue *queue) {
+	return(queue->front == NULL);
+}
+
+void enqueue(Queue *queue, NodePtr data) {
+	QNode *newNode = createQNode(data);
+    if(queue->rear == NULL) {
+        queue->front = newNode;
+        queue->rear = newNode;
+    } else {
+        queue->rear->next = newNode;
+        queue->rear = newNode;
+    }
+}
+
+NodePtr dequeue(Queue *queue) {
+	if(!isEmpty(queue)) {
+        QNode *temp = queue->front;
+	    NodePtr data = temp->data;
+	    queue->front = queue->front->next;
+	    if(queue->front == NULL) {
+	        queue->rear = NULL;
+	    }
+	    free(temp);
+	    return data;
+    }
+}
+
 void insertElem(NodePtr *A, Product elem) { // non recursive
 	NodePtr *trav;
 	
@@ -34,36 +80,63 @@ void addElem(NodePtr *A, Product elem) { // recursive
 }
 
 void deleteElem(NodePtr *A, Product elem) { // non recursive
-	NodePtr *trav1, *trav2, temp;
+	if (*A != NULL) {
+		NodePtr parent = NULL;
+	    NodePtr current = *A;
 	
-	for(trav1 = A; *trav1 != NULL && ((*trav1)->item.prodName, elem.prodName) != 0;) {
-		if(strcmp(elem.prodName, (*trav1)->item.prodName) < 0) {
-			trav1 = &(*trav1)->left;
-		} else {
-			trav1 = &(*trav1)->right;
-		}
-	}
+	    while (current != NULL) {
+	        if (strcmp(elem.prodName, current->item.prodName) == 0) {
+	            if (current->left == NULL && current->right == NULL) {
+	                if (parent == NULL) {
+	                    *A = NULL;
+	                } else if (parent->left == current) {
+	                    parent->left = NULL;
+	                } else {
+	                    parent->right = NULL;
+	                }
+	                free(current);
+	                return;
+	            } else if (current->left == NULL) {
+	                if (parent == NULL) {
+	                    *A = current->right;
+	                } else if (parent->left == current) {
+	                    parent->left = current->right;
+	                } else {
+	                    parent->right = current->right;
+	                }
+	                free(current);
+	                return;
+	            } else if (current->right == NULL) {
+	                if (parent == NULL) {
+	                    *A = current->left;
+	                } else if (parent->left == current) {
+	                    parent->left = current->left;
+	                } else {
+	                    parent->right = current->left;
+	                }
+	                free(current);
+	                return;
+	            } else {
+	                NodePtr successor = min(current->right);
 	
-	if(*trav1 != NULL) {
-		temp = (NodePtr)malloc(sizeof(NodeType));
-		if(temp != NULL) {
-			if((*trav1)->left == NULL) {
-				temp = *trav1;
-				*trav1 = temp->right;
-				free(temp);
-			} else if((*trav1)->right == NULL) {
-				temp = *trav1;
-				*trav1 = temp->left;
-				free(temp);
-			} else {
-				for(trav2 = &(*trav1)->right; (*trav2)->left != NULL; trav2 = &(*trav2)->left) {}
-				
-				temp = *trav2;
-				*trav2 = temp->right;
-				(*trav1)->item = temp->item;
-				free(temp);
-			}
-		}
+	                strcpy(current->item.prodName, successor->item.prodName);
+	                current->item.prodPrice = successor->item.prodPrice;
+	                current->item.prodQty = successor->item.prodQty;
+	                current->item.expDate.day = successor->item.expDate.day;
+	                current->item.expDate.month = successor->item.expDate.month;
+	                current->item.expDate.year = successor->item.expDate.year;
+	
+	                deleteElem(&(current->right), successor->item);
+	                return;
+	            }
+	        } else if (strcmp(elem.prodName, current->item.prodName) < 0) {
+	            parent = current;
+	            current = current->left;
+	        } else {
+	            parent = current;
+	            current = current->right;
+	        }
+	    }
 	}
 }
 
@@ -71,24 +144,50 @@ void removeElem(NodePtr *A, Product elem) { // recursive
 
 }
 
-bool isMember(NodePtr A, Product elem) {
-	
+int isMember(NodePtr A, Product elem) {
+	while (A != NULL) {
+        int cmp = strcmp(elem.prodName, A->item.prodName);
+        if (cmp == 0) {
+            return 1;
+        } else if (cmp < 0) {
+            A = A->left;
+        } else {
+            A = A->right;
+        }
+    }
+    return 0;
 }
 
-char *min(NodePtr A) { // this function returns the minimum value of the tree
+NodePtr min(NodePtr A) { // this function returns the minimum value of the tree
 	NodePtr trav;
 	for(trav = A; trav != NULL; trav = trav->left) {}
-	return trav->item.prodName;
+	return trav;
 }
 
-char *max(NodePtr A) { // this function returns the maximum value of the tree
+NodePtr max(NodePtr A) { // this function returns the maximum value of the tree
 	NodePtr trav;
 	for(trav = A; trav != NULL; trav = trav->right) {}
-	return trav->item.prodName;
+	return trav;
 }
 
 void displayBST(NodePtr A) {
+	if (A != NULL) {
+        Queue *queue = createQueue();
+   		enqueue(queue, A);
 	
+	    while (!isEmpty(queue)) {
+	        NodePtr current = dequeue(queue);
+	        printf("%s ", current->item.prodName);
+	
+	        if (current->left != NULL) {
+	            enqueue(queue, current->left);
+	        }
+	        if (current->right != NULL) {
+	            enqueue(queue, current->right);
+	        }
+	    }
+    	printf("\n");
+    }
 }
 
 void visualizeBST(NodePtr A) {

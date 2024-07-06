@@ -44,8 +44,9 @@ int main(int argc, char *argv[]) {
 	postorder(newBST);
 	printf("}");
 	
-	printf("\n\nMin Value: %s\n\n", min(newBST));
+	printf("\n\nMin Value: %s\n", min(newBST));
 	
+	printf("\nDeleted product name Fita...\n\n");
 	deleteElem(&newBST, productArr[6]);
 	
 	printf("Preorder: { ");
@@ -58,7 +59,10 @@ int main(int argc, char *argv[]) {
 	printf("\n\n");
 	printf("Postorder: { ");
 	postorder(newBST);
-	printf("}");
+	printf("}\n\n");
+	
+	printf("Displaying BST using Breadth First Search: ");
+	displayBST(newBST);
 	
 	return 0;
 }
